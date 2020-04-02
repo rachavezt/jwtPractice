@@ -20,9 +20,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(EmployeeDto employeeDto) {
+    public Employee addEmployee(EmployeeDto employeeDto, String createdBy) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
+        employee.setCreatedBy(createdBy);
         return employeeDao.save(employee);
     }
 }

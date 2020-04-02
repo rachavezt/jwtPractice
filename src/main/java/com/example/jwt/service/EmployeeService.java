@@ -5,5 +5,5 @@ import com.example.jwt.entity.Employee;
 
 public interface EmployeeService {
     Iterable<Employee> getAllEmployees();
-    Employee addEmployee(EmployeeDto employeeDto);
+    Employee addEmployee(EmployeeDto employeeDto, String createdBy);
 }

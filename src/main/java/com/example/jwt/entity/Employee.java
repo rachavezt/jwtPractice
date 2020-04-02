@@ -24,4 +24,7 @@ public class Employee {
 
     @Column
     private Date dateOfBirth;
+
+    @Column
+    private String createdBy;
 }
