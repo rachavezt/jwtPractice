@@ -7,8 +7,8 @@ import com.example.jwt.entity.Employee;
 import com.example.jwt.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,5 +43,15 @@ public class EmployeeController {
         Employee employee = employeeService.addEmployee(employeeDto, authenticatedUser.getUsername());
         BeanUtils.copyProperties(employee, employeeDto);
         return employeeDto;
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = "application/json")
+    public void update(@PathVariable("id") Integer id, @RequestBody EmployeeDto employeeDto){
+        employeeService.updateEmployee(employeeDto, id);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Integer id) {
+        employeeService.deleteEmployee(id);
     }
 }

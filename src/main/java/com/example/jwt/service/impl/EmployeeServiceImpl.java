@@ -26,4 +26,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCreatedBy(createdBy);
         return employeeDao.save(employee);
     }
+
+    @Override
+    public void updateEmployee(EmployeeDto employeeDto, Integer id) {
+        Employee updateEmployee = employeeDao.findById(id).orElse(null);
+        BeanUtils.copyProperties(employeeDto, updateEmployee);
+        employeeDao.save(updateEmployee);
+    }
+
+    @Override
+    public void deleteEmployee(Integer id) {
+        Employee deleteEmployee = employeeDao.findById(id).orElse(null);
+        employeeDao.delete(deleteEmployee);
+    }
 }
