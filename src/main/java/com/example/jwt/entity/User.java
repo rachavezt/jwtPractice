@@ -25,6 +25,15 @@ public class User {
     private Integer id;
 
     @Column
+    private String firstName;
+
+    @Column
+    private String lastName;
+
+    @Column
+    private String mobile;
+
+    @Column
     private String username;
 
     @Column

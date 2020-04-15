@@ -7,6 +7,7 @@ import com.example.jwt.entity.Employee;
 import com.example.jwt.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,9 +46,12 @@ public class EmployeeController {
         return employeeDto;
     }
 
+    @Secured("ROLE_COMMON")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = "application/json")
-    public void update(@PathVariable("id") Integer id, @RequestBody EmployeeDto employeeDto){
-        employeeService.updateEmployee(employeeDto, id);
+    public EmployeeDto update(@PathVariable("id") Integer id, @RequestBody EmployeeDto employeeDto){
+        Employee employee = employeeService.updateEmployee(employeeDto, id);
+        BeanUtils.copyProperties(employee, employeeDto);
+        return employeeDto;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)

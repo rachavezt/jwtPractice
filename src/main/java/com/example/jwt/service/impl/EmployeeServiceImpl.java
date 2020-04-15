@@ -28,10 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(EmployeeDto employeeDto, Integer id) {
+    public Employee updateEmployee(EmployeeDto employeeDto, Integer id) {
         Employee updateEmployee = employeeDao.findById(id).orElse(null);
         BeanUtils.copyProperties(employeeDto, updateEmployee);
-        employeeDao.save(updateEmployee);
+        return employeeDao.save(updateEmployee);
     }
 
     @Override

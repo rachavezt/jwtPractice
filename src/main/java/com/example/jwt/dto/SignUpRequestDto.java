@@ -9,6 +9,10 @@ import javax.validation.constraints.Email;
 @Getter
 @Setter
 public class SignUpRequestDto {
+
+    private String firstName;
+    private String lastName;
+    private String mobile;
     @Email
     private String email;
     private String username;

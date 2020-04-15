@@ -3,9 +3,11 @@ package com.example.jwt.controller;
 import com.example.jwt.config.security.JwtTokenProvider;
 import com.example.jwt.dto.ApiResponseDto;
 import com.example.jwt.dto.LoginRequestDto;
+import com.example.jwt.dto.LoginResponseDto;
 import com.example.jwt.dto.SignUpRequestDto;
 import com.example.jwt.entity.User;
 import com.example.jwt.service.UserService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,10 @@ public class AuthenticationController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @RequestMapping(value = "/signIn", method = RequestMethod.POST, produces = "text/plain")
-    public String authenticateUser(@Valid @RequestBody LoginRequestDto loginRequest) {
+    @RequestMapping(value = "/signIn", method = RequestMethod.POST, produces = "application/json")
+    public LoginResponseDto authenticateUser(@Valid @RequestBody LoginRequestDto loginRequest) {
+
+        System.out.println("Reached");
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -48,7 +52,11 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return "Bearer " + jwt;
+
+        LoginResponseDto loginResponseDto =  new LoginResponseDto();
+        loginResponseDto.setToken("Bearer " + jwt);
+
+        return loginResponseDto;
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST, produces = "application/json")

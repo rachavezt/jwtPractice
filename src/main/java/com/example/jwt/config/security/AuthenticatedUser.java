@@ -15,6 +15,12 @@ public class AuthenticatedUser implements UserDetails {
 
     private Integer id;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String mobile;
+
     private String username;
 
     @JsonIgnore
@@ -25,8 +31,11 @@ public class AuthenticatedUser implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public AuthenticatedUser(Integer id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public AuthenticatedUser(Integer id, String firstName, String lastName, String mobile, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mobile = mobile;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -40,11 +49,30 @@ public class AuthenticatedUser implements UserDetails {
 
         return new AuthenticatedUser(
                 user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getMobile(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities
         );
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMobile() {
+        return mobile;
     }
 
     @Override
